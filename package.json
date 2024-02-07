@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@lambdatest/smartui-cli": "^2.0.6",
+    "@lambdatest/testcafe-driver": "^1.0.3",
+    "testcafe": "^3.5.0"
+  }
+}
