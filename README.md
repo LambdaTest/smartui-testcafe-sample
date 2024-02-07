@@ -140,10 +140,6 @@ Execute `visual regression tests` on SmartUI using the following commands
 npx smartui exec node sdkCloud.js --config smartui-web.json
 ```
 
-:::note 
-You may use the `npx smartui --help` command in case you are facing issues during the execution of SmartUI commands in the CLI.
-:::
-
 ##  View SmartUI Results
 
 You have successfully integrated SmartUI SDK with your Testcafe tests. Visit your SmartUI project to view builds and compare snapshots between different test runs.
