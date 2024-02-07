@@ -28,6 +28,7 @@ Clone this repository to get started with a TestCafe test setup integrated with 
 ```bash
 git clone https://github.com/LambdaTest/smartui-testcafe-sample
 cd smartui-testcafe-sample
+```
 
 ### **Step 3:** Configure your Project Token
 
@@ -55,9 +56,6 @@ $Env:PROJECT_TOKEN="123456#1234abcd-****-****-****-************"
 ```
 </TabItem>
 </Tabs>
-
-<img loading="lazy" src={require('../assets/images/smart-visual-testing/project-token-primer.webp').default} alt="cmd" width="768" height="373" className="doc_img"/>
-
 
 ### **Step 4:** Create and Configure SmartUI Config
 
@@ -89,20 +87,10 @@ Once, the configuration file will be created, you will be seeing the default con
       [
         360
       ]
-    ], // Full Page screenshots are captured by default
-    "waitForPageRender": 50000, // Optional (Should only be used in case of websites which take more than 30s to load)
-    "waitForTimeout": 1000 //Optional (Should only be used in case lazy-loading/async components are present )
-
+    ], 
   }
 }
 ```
-:::info Optional Keys in SmartUI configuration
-
-**waitForPageRender** - If one or more `URLs` in your script require a relatively higher amount of time to load, you may use the `waitForPageRender` key in the config file to make sure the screenshots are rendered correctly. Avoid using the same in case your websites render in less than 30 seconds as it might increase the execution time of your tests.
-
-
-**waitForTimeout** - If you are using any `async` components, you can add wait time for the page to load the DOM of your components. This can help avoid false-positive results for your tests. You can add the wait time in milliseconds, which might increase the execution time of your tests.
-:::
 
 #### For capturing viewport screenshots
 
