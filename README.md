@@ -104,7 +104,7 @@ Once, the configuration file will be created, you will be seeing the default con
       "firefox",
       "safari",
       "edge",
-      // Add more browser configuration here
+      
     ],
     "viewports": [
       [
