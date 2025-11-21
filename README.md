@@ -2,12 +2,6 @@
 
 Welcome to the SmartUI SDK sample for TestCafe. This repository demonstrates how to integrate SmartUI visual regression testing with TestCafe.
 
-## Prerequisites
-
-- Node.js installed
-- LambdaTest account credentials (for Cloud tests)
-- Chrome browser (for Local tests)
-
 ## Repository Structure
 
 ```
@@ -17,102 +11,98 @@ smartui-testcafe-sample/
 └── smartui-web.json        # SmartUI config (create with npx smartui config:create)
 ```
 
-## Quick Start
+## 1. Prerequisites and Environment Setup
 
-### Local Execution
+### Prerequisites
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/LambdaTest/smartui-testcafe-sample
-   cd smartui-testcafe-sample
-   ```
+- Node.js installed
+- LambdaTest account credentials (for Cloud tests)
+- Chrome browser (for Local tests)
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Environment Setup
 
-3. **Set your Project Token:**
-   ```bash
-   export PROJECT_TOKEN='your_project_token'
-   ```
-
-4. **Create SmartUI config:**
-   ```bash
-   npx smartui config:create smartui-web.json
-   ```
-
-5. **Run the test:**
-   ```bash
-   npx smartui exec -- npx testcafe chrome testcafeSDKLocal.js
-   ```
-
-### Cloud Execution
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/LambdaTest/smartui-testcafe-sample
-   cd smartui-testcafe-sample
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set your credentials:**
-   ```bash
-   export LT_USERNAME='your_username'
-   export LT_ACCESS_KEY='your_access_key'
-   export PROJECT_TOKEN='your_project_token'
-   ```
-
-4. **Create SmartUI config:**
-   ```bash
-   npx smartui config:create smartui-web.json
-   ```
-
-5. **Run the test:**
-   ```bash
-   npx smartui exec -- npx testcafe "lambdatest:Chrome@latest:Windows 10" testcafeSDKLocal.js
-   ```
-
-**Note**: For cloud execution, you need to use TestCafe's LambdaTest browser provider. Install it with:
+**For Cloud:**
 ```bash
-npm install testcafe-browser-provider-lambdatest
+export LT_USERNAME='your_username'
+export LT_ACCESS_KEY='your_access_key'
+export PROJECT_TOKEN='your_project_token'
 ```
 
-## Dependencies
+**For Local:**
+```bash
+export PROJECT_TOKEN='your_project_token'
+```
 
-The project uses the following key dependencies:
+## 2. Initial Setup and Dependencies
 
+### Clone the Repository
+
+```bash
+git clone https://github.com/LambdaTest/smartui-testcafe-sample
+cd smartui-testcafe-sample
+```
+
+### Install Dependencies
+
+The repository already includes the required dependencies in `package.json`. Install them:
+
+```bash
+npm install
+```
+
+**Dependencies included:**
 - `@lambdatest/smartui-cli` - SmartUI CLI
 - `@lambdatest/testcafe-driver` - SmartUI TestCafe driver
 - `testcafe` - TestCafe framework
 
-## Test File
+**For Cloud execution, also install:**
+```bash
+npm install testcafe-browser-provider-lambdatest
+```
 
-### Test File (`testcafeSDKLocal.js`)
+### Create SmartUI Configuration
 
-The test file works for both local and cloud execution:
+```bash
+npx smartui config:create smartui-web.json
+```
 
+## 3. Steps to Integrate Screenshot Commands into Codebase
+
+The SmartUI screenshot function is already implemented in the repository.
+
+**Test File** (`testcafeSDKLocal.js`):
 ```javascript
-import { Selector } from 'testcafe';
 import { smartuiSnapshot } from '@lambdatest/testcafe-driver';
 
 fixture('LambdaTest Test')
   .page('https://www.lambdatest.com');
 
 test('Take Homepage Screenshot', async (t) => {
-  // Take a screenshot using LambdaTest's TestCafe driver
   await smartuiSnapshot(t, 'screenshot');
 });
 ```
 
-**Note**: 
-- The code is already configured and ready to use
-- You can modify the URL (`https://www.lambdatest.com`) and screenshot name (`"screenshot"`) if needed
-- The test uses TestCafe's fixture and test structure
+**Note**: The code is already configured and ready to use. You can modify the URL and screenshot name if needed. The `smartuiSnapshot` function takes the test controller `t` as the first parameter and the screenshot name as the second parameter.
+
+## 4. Execution and Commands
+
+### Local Execution
+
+```bash
+npx smartui exec -- npx testcafe chrome testcafeSDKLocal.js
+```
+
+### Cloud Execution
+
+```bash
+npx smartui exec -- npx testcafe "lambdatest:Chrome@latest:Windows 10" testcafeSDKLocal.js
+```
+
+**Note**: Replace `"lambdatest:Chrome@latest:Windows 10"` with your desired browser and platform.
+
+## Test File
+
+The test file (`testcafeSDKLocal.js`) works for both local and cloud execution.
 
 ## Configuration
 
@@ -122,8 +112,6 @@ Create the SmartUI configuration file using:
 ```bash
 npx smartui config:create smartui-web.json
 ```
-
-This will create a default configuration file that you can customize.
 
 ## View Results
 
