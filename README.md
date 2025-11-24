@@ -113,10 +113,177 @@ Create the SmartUI configuration file using:
 npx smartui config:create smartui-web.json
 ```
 
+## Best Practices
+
+### Screenshot Naming
+
+- Use descriptive, unique names for each screenshot
+- Include test context and state
+- Avoid special characters
+- Use consistent naming conventions
+
+### When to Take Screenshots
+
+- After critical user interactions
+- Before and after form submissions
+- At different viewport sizes
+- After page state changes
+
+### TestCafe-Specific Tips
+
+- Use `await t.wait()` before screenshots for dynamic content
+- Take screenshots after page loads completely
+- Use `t.resizeWindow()` for responsive testing
+- Combine with TestCafe assertions for better test flow
+
+### Example: Screenshot After Interaction
+
+```javascript
+import { smartuiSnapshot } from '@lambdatest/testcafe-driver';
+
+fixture('LambdaTest Test')
+  .page('https://www.lambdatest.com');
+
+test('Take Screenshot After Search', async (t) => {
+  await t.typeText('#search', 'TestCafe');
+  await t.wait(1000);
+  await smartuiSnapshot(t, 'search-results');
+});
+```
+
+## Common Use Cases
+
+### Responsive Testing
+
+```javascript
+fixture('Responsive Tests')
+  .page('https://www.lambdatest.com');
+
+test('Desktop View', async (t) => {
+  await t.resizeWindow(1920, 1080);
+  await smartuiSnapshot(t, 'homepage-desktop');
+});
+
+test('Tablet View', async (t) => {
+  await t.resizeWindow(768, 1024);
+  await smartuiSnapshot(t, 'homepage-tablet');
+});
+
+test('Mobile View', async (t) => {
+  await t.resizeWindow(375, 667);
+  await smartuiSnapshot(t, 'homepage-mobile');
+});
+```
+
+### Multi-Step Flow Testing
+
+```javascript
+test('Checkout Flow', async (t) => {
+  await t.navigateTo('https://example.com/checkout');
+  await smartuiSnapshot(t, 'checkout-step-1');
+  
+  await t.click('#next-step');
+  await t.wait(500);
+  await smartuiSnapshot(t, 'checkout-step-2');
+});
+```
+
+## CI/CD Integration
+
+### GitHub Actions Example
+
+```yaml
+name: TestCafe SmartUI Tests
+
+on: [push, pull_request]
+
+jobs:
+  visual-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run TestCafe with SmartUI (Local)
+        env:
+          PROJECT_TOKEN: ${{ secrets.SMARTUI_PROJECT_TOKEN }}
+        run: |
+          npx smartui exec -- npx testcafe chrome testcafeSDKLocal.js
+      
+      - name: Run TestCafe with SmartUI (Cloud)
+        env:
+          PROJECT_TOKEN: ${{ secrets.SMARTUI_PROJECT_TOKEN }}
+          LT_USERNAME: ${{ secrets.LT_USERNAME }}
+          LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
+        run: |
+          npx smartui exec -- npx testcafe "lambdatest:Chrome@latest:Windows 10" testcafeSDKLocal.js
+```
+
+## Troubleshooting
+
+### Issue: `smartuiSnapshot is not a function`
+
+**Solution**: Ensure the driver is imported:
+```javascript
+import { smartuiSnapshot } from '@lambdatest/testcafe-driver';
+```
+
+### Issue: Screenshots not captured
+
+**Solution**:
+1. Verify `PROJECT_TOKEN` is set
+2. Add waits before screenshots
+3. Ensure test completes successfully
+4. Check TestCafe version compatibility
+
+### Issue: `PROJECT_TOKEN is required`
+
+**Solution**: Set the environment variable:
+```bash
+export PROJECT_TOKEN='your_project_token'
+```
+
+### Issue: Cloud execution fails
+
+**Solution**:
+1. Install browser provider: `npm install testcafe-browser-provider-lambdatest`
+2. Verify `LT_USERNAME` and `LT_ACCESS_KEY` are set
+3. Check browser/platform format: `"lambdatest:Chrome@latest:Windows 10"`
+
+## Configuration Tips
+
+### Optimizing `smartui-web.json`
+
+```json
+{
+  "web": {
+    "browsers": ["chrome", "firefox", "edge"],
+    "viewports": [
+      [1920, 1080],
+      [1366, 768],
+      [375, 667]
+    ],
+    "waitForPageRender": 30000,
+    "waitForTimeout": 2000
+  }
+}
+```
+
 ## View Results
 
 After running the tests, visit your SmartUI project dashboard to view the captured screenshots and compare them with baseline builds.
 
-## More Information
+## Additional Resources
 
-For detailed onboarding instructions, see the [SmartUI TestCafe Onboarding Guide](https://www.lambdatest.com/support/docs/smartui-onboarding-testcafe/).
+- [SmartUI TestCafe Onboarding Guide](https://www.lambdatest.com/support/docs/smartui-onboarding-testcafe/)
+- [TestCafe Documentation](https://testcafe.io/documentation/)
+- [LambdaTest TestCafe Documentation](https://www.lambdatest.com/support/docs/testcafe-testing/)
+- [SmartUI Dashboard](https://smartui.lambdatest.com/)
+- [LambdaTest Community](https://community.lambdatest.com/)
