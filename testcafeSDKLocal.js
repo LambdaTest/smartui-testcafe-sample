@@ -1,10 +1,10 @@
 import { Selector } from 'testcafe';
 import { smartuiSnapshot } from '@lambdatest/testcafe-driver';
 
-fixture('Amazon Test')
-  .page('https://www.amazon.com');
+fixture('LambdaTest Test')
+  .page('https://www.lambdatest.com');
 
-test('Take Amazon Homepage Screenshot', async (t) => {
+test('Take Homepage Screenshot', async (t) => {
   // Take a screenshot using LambdaTest's TestCafe driver
-  await smartuiSnapshot(t, 'Amazon Homepage');
+  await smartuiSnapshot(t, 'screenshot');
 });
